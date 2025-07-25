@@ -38,7 +38,9 @@ def generate_response(query: str) -> str:
 async def serve_home(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
 
-@app.post("/generate")
-async def post_response(query: str = Form(...)):
+@app.post("/generate", response_class=HTMLResponse)
+async def post_response(request: Request, query: str = Form(...)):
     response = generate_response(query)
-    return {"answer": response}
+    return templates.TemplateResponse("index.html", {
+        "request": request,
+        "answer": response})

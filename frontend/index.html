@@ -1,24 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>LoL RAG Chatbot</title>
-  <link rel="stylesheet" href="{{ url_for('static', path='style.css') }}">
-  <link rel="icon" type="image/x-icon" href="/png's/logo.png">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LoL RAG Chatbot</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='style.css') }}">
+    <link rel="icon" type="image/x-icon" href="/png's/logo.png">
 </head>
+
 <body>
-    
+
     <div id="logo" class="central">
         <img src="{{ url_for('static', path='img/logo.png') }}">
     </div>
 
     <div id="searchBar" class="central">
         <form id="myForm" action="/generate" method="post">
-            <input type="text" id="username" placeholder="Ask LoLBot" name="query"/>
+            <input type="text" id="username" placeholder="Ask LoLBot" name="query" />
             <button type="submit">Submit</button>
         </form>
+
+        <!-- Show the response only if one exists -->
+        {% if answer %}
+        <div class="response-box">
+            <h2>{{ query }}</h2>
+            <p>{{ answer }}</p>
+        </div>
+        {% endif %}
     </div>
 
 </body>
+
 </html>
