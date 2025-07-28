@@ -1,5 +1,6 @@
 import './searchbar.css'
 import logo from "./assets/logo.png"
+
 function App() {
   return (
     <div className="app-container">
@@ -13,6 +14,7 @@ function App() {
       </form>
     </div>
   );
+
 }
 
 export default App;
