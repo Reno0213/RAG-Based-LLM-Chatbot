@@ -1,22 +1,17 @@
-import React from "react";
-import logo from "../assets/logo.png";
-
-function LandingPage({ query, setQuery, handleSubmit }) {
-  return (
-    <div className="landing-container">
-      <img src={logo} alt="Logo" className="logo" />
-      <form onSubmit={handleSubmit} className="landing-form">
-        <input
-          type="text"
-          placeholder="Ask something..."
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          className="search-input"
-        />
-        <button type="submit" className="search-button">Ask</button>
-      </form>
-    </div>
-  );
-}
+const LandingPage = ({query, setQuery, handleSubmit}) => {
+    return (
+        <>
+            <form onSubmit={handleSubmit}>
+                <input
+                    type="text"
+                    value={query}
+                    onChange={e => setQuery(e.target.value)}
+                    placeholder="Ask LoLBot..."
+                />
+                <button type="submit">Submit</button>
+            </form>
+        </>
+    );
+};
 
 export default LandingPage;

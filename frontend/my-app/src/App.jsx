@@ -1,20 +1,57 @@
-import './searchbar.css'
-import logo from "./assets/logo.png"
+import { useState } from 'react'
+import axios from 'axios'
+import LandingPage from './components/LandingPage'
+import ChatBox from './components/ChatBox'
+import './index.css'
 
-function App() {
+const App = () => {
+
+  const [query, setQuery] = useState("");
+  const [isChatView, setIsChatView] = useState(true);
+  const [chatHistory, setChatHistory] = useState([]);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const url = "/chat"
+
+    //Append initial query to chat history
+    setChatHistory(prev => [...prev, { sender: 'user', text: query }]);
+    try {
+      const res = await axios.post(
+        url,
+        { query });
+      const response = res.data.response;
+      setChatHistory(prev => [...prev, { sender: 'bot', text: response }]);
+
+      if (!isChatView) {
+        setIsChatView(true);
+      }
+      setQuery("");
+
+    } catch (err) {
+      console.error("API error", err)
+      setChatHistory(prev => [...prev, { sender: bot, text: "Error: could not get a response" }]);
+    }
+  };
+
   return (
-    <div className="app-container">
-      <img src={logo} alt="Logo" id="logo"></img>
-      <form className="search-form">
-        <input
-          type="text"
-          placeholder="Ask a question..."
+    <>
+      {isChatView ? (
+        <ChatBox
+          chatHistory={chatHistory}
+          query={query}
+          setQuery={setQuery}
+          handleSubmit={handleSubmit}
         />
-        <button type="submit">Search</button>
-      </form>
-    </div>
+      ) : (
+        <LandingPage
+          query={query}
+          setQuery={setQuery}
+          handleSubmit={handleSubmit}
+        />
+      )}
+    </>
   );
-
 }
 
 export default App;
