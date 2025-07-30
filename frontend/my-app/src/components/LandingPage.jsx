@@ -1,14 +1,19 @@
+import logo from '../assets/logo.png';
+
 const LandingPage = ({query, setQuery, handleSubmit}) => {
     return (
         <>
+        <div className="logo central">
+            <img src={logo} alt="LoLBot logo" />
+        </div>
             <form onSubmit={handleSubmit}>
-                <input
+                <input className="search-form"
                     type="text"
                     value={query}
                     onChange={e => setQuery(e.target.value)}
                     placeholder="Ask LoLBot..."
                 />
-                <button type="submit">Submit</button>
+                <button className="search-form button" type="submit">Submit</button>
             </form>
         </>
     );

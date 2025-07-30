@@ -5,14 +5,24 @@ from langchain_community.embeddings import HuggingFaceEmbeddings
 # from transformers import pipeline
 from fastapi import FastAPI, Request
 from fastapi import Form
+from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
 app = FastAPI()
 
-app.mount("/static", StaticFiles(directory="frontend"), name="static")
-templates = Jinja2Templates(directory="frontend")
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Or ["http://localhost:5173"] to be specific
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+app.mount("/static", StaticFiles(directory="../frontend"), name="static")
+templates = Jinja2Templates(directory="../frontend")
 
 # Connect to Pinecone Index
 load_dotenv()
@@ -38,9 +48,17 @@ def generate_response(query: str) -> str:
 async def serve_home(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
 
-@app.post("/generate", response_class=HTMLResponse)
-async def post_response(request: Request, query: str = Form(...)):
-    response = generate_response(query)
-    return templates.TemplateResponse("index.html", {
-        "request": request,
-        "answer": response})
+# @app.post("/generate", response_class=HTMLResponse)
+# async def post_response(request: Request, query: str = Form(...)):
+#     response = generate_response(query)
+#     return templates.TemplateResponse("index.html", {
+#         "request": request,
+#         "answer": response})
+
+class ChatQuery(BaseModel):
+    query: str
+
+@app.post("/chat")
+async def chat_api(data: ChatQuery):
+    response = generate_response(data.query)
+    return {"response": response}
