@@ -107,9 +107,3 @@ This project does not have a license file. Please add a license file to specify 
 ## Acknowledgements
 
 -   [Anyscale's guide for production](https://www.anyscale.com/blog/a-comprehensive-guide-for-building-rag-based-llm-applications-part-1#chunk-data) - Inspiration for the RAG implementation.
-
-## Try the Web Application
-
-[Try the final web application here]()
-
-Still in production.
