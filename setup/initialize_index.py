@@ -25,7 +25,7 @@ if not pc.has_index(index_name):
     )
 
 # Load and clean dataset
-df = pd.read_csv('data/league_lore_df.csv')
+df = pd.read_csv('../data/league_lore_df.csv')
 dataset = df.drop('Unnamed: 4', axis=1)
 
 # Extract only Zyra's row
