@@ -102,7 +102,7 @@ Contributions are welcome! Here's how you can contribute:
 
 ## License
 
-This project does not have a license file. Please add a license file to specify how the project can be used.
+This project does not have a license file.
 
 ## Acknowledgements
 
